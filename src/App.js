@@ -16,7 +16,6 @@ class BooksApp extends React.Component {
 
     componentDidMount() {
         BooksAPI.getAll().then(res => {
-            console.log(res);
             this.setState(() => ({
                 books: res
             }));
@@ -24,8 +23,6 @@ class BooksApp extends React.Component {
     }
 
     handleUpdateShelf(book) {
-        console.log(book);
-        console.log(this.props.location)
         this.setState(prevState => {
             let newBooks = prevState.books.filter(b => b.id !== book.id);
             return {

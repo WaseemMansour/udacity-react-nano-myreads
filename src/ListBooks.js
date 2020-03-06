@@ -30,17 +30,13 @@ class ListBooks extends Component {
     }
 
     render() {
-        // let x = []
-        
-        // x = React.Children.toArray(this.props.books)
-        // console.log(x)
-        let currentlyReadingBooks = this.state.books.filter(book => {
+        const currentlyReadingBooks = this.state.books.filter(book => {
             return book.shelf === "currentlyReading";
         });
-        let wantToRead = this.state.books.filter(book => {
+        const wantToRead = this.state.books.filter(book => {
             return book.shelf === "wantToRead";
         });
-        let read = this.state.books.filter(book => {
+        const read = this.state.books.filter(book => {
             return book.shelf === "read";
         });
         return (

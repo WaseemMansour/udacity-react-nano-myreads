@@ -70,6 +70,10 @@ class Search extends Component {
         this.props.onShelfUpdated(book)
     }
 
+    componentDidMount(){
+        this.nameInput.focus();
+    }
+
     render() {
         return (
             <div className="search-books">
@@ -78,7 +82,11 @@ class Search extends Component {
                         <button className="close-search">Close</button>
                     </Link>
                     <div className="search-books-input-wrapper">
-                        <input type="text" onChange={this.handleSearch} placeholder="Search by title or author"/>
+                        <input 
+                        ref={(input) => { this.nameInput = input; }}
+                        type="text"
+                        onChange={this.handleSearch} 
+                        placeholder="Search by title or author"/>
                     </div>
                 </div>
                 <div className="search-books-results">
