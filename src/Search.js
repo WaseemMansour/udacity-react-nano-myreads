@@ -13,20 +13,34 @@ class Search extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleShelfUpdate = this.handleShelfUpdate.bind(this);
     }
+
+    mergeResultswithMyReads(results, myReads) {
+        const currentIDs = {};
+        Object.keys(myReads).map(book => 
+            currentIDs[myReads[book].id] = myReads[book].shelf
+        )
+        Object.keys(results).map(book => 
+            results[book].shelf = currentIDs[results[book].id]
+        )
+        return results;
+    }
     handleSearch(e) {
+        
+        const {myReads} = this.props;
         const {value} = e.target;
+        let modifiedResults = [];
         value.length ? 
             this.debounce(BooksAPI.search(e.target.value)
             .then(res => {
-                console.log(res)
-                res.error ? 
+                (res === undefined || res.error) ? 
                     this.setState({
                         results: []
                     })    
                 :
+                res.length && (modifiedResults = this.mergeResultswithMyReads(res, myReads))
                 this.setState({
-                    results: res
-                });
+                    results: modifiedResults
+                })
             }), 500)
         : 
         this.setState({results: []})
@@ -71,7 +85,7 @@ class Search extends Component {
                     <ol className="books-grid">
                         { this.state.results.length ? 
                             this.state.results.map(book => {
-                                return <li key={book.id}><Book onBookUpdate={this.handleShelfUpdate} bookData={book} /></li>
+                                return <li key={book.id}><Book myReads={this.props.myReads} onBookUpdate={this.handleShelfUpdate} bookData={book} /></li>
                             })
                         : 
                             null

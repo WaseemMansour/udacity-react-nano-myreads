@@ -30,6 +30,10 @@ class ListBooks extends Component {
     }
 
     render() {
+        // let x = []
+        
+        // x = React.Children.toArray(this.props.books)
+        // console.log(x)
         let currentlyReadingBooks = this.state.books.filter(book => {
             return book.shelf === "currentlyReading";
         });
@@ -55,7 +59,7 @@ class ListBooks extends Component {
                 <Link 
                     to={{
                         pathname: "/search",
-                        state: { books: this.props.books} 
+                        books: this.props.books
                     }}>
                     <button type="button">
                     Add a book

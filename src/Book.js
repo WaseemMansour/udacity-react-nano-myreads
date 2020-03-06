@@ -4,6 +4,7 @@ class Book extends Component {
     constructor(props) {
         super(props);
         this.handleMoveToShelf = this.handleMoveToShelf.bind(this);
+        // console.log(props)
     }
 
     handleMoveToShelf(event) {
@@ -14,7 +15,7 @@ class Book extends Component {
 
     render() {
         const { title, authors, imageLinks, shelf } = this.props.bookData;
-
+        
         return (
             
             <div className="book">
