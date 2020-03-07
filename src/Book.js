@@ -7,10 +7,16 @@ const Book = props => {
         props.bookData.shelf = value;
         props.onBookUpdate(props.bookData)
     }
+    let bookAuthors = [];
+    authors && Object.keys(authors).map(author => 
+        bookAuthors.push(<span key={author}>{authors[author]}<br/></span>)
+    );
+    bookAuthors.join('');
+    
     return (
         <div className="book">
             <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${imageLinks.thumbnail ? imageLinks.thumbnail :''})` }}></div>
+            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url(${imageLinks ? imageLinks.thumbnail :''})` }}></div>
             <div className="book-shelf-changer">
                 <select onChange={handleMoveToShelf} value={shelf || 'none'}>
                     <option value="move" disabled>Move to...</option>
@@ -22,7 +28,7 @@ const Book = props => {
             </div>
             </div>
             <div className="book-title">{title}</div>
-            <div className="book-authors">{authors ? authors[0] : ''}</div>
+            <div className="book-authors">{authors ? bookAuthors : ''}</div>
         </div>
     
     );
