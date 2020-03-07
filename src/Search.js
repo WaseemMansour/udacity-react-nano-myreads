@@ -30,20 +30,23 @@ class Search extends Component {
         const {value} = e.target;
         let modifiedResults = [];
         value.length ? 
-            this.debounce(BooksAPI.search(e.target.value)
+            this.debounce(BooksAPI.search(value)
             .then(res => {
-                (res === undefined || res.error) ? 
+                console.log(res['error']);
+                res['error'] ? 
                     this.setState({
+                        query: value,
                         results: []
                     })    
                 :
                 res.length && (modifiedResults = this.mergeResultswithMyReads(res, myReads))
                 this.setState({
+                    query: value,
                     results: modifiedResults
                 })
             }), 500)
         : 
-        this.setState({results: []})
+        this.setState({results: [], query: null})
     }
 
     debounce(func, wait, immediate) {
@@ -90,6 +93,12 @@ class Search extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
+                        {
+                            this.state.query && !this.state.results.length ? 
+                            <p>No results for this search keyword.</p>
+                            :
+                            null
+                        }
                     <ol className="books-grid">
                         { this.state.results.length ? 
                             this.state.results.map(book => {
